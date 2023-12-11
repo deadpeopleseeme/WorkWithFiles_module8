@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkWithFiles", "ConsoleApp2\WorkWithFiles.csproj", "{7066239C-DE9A-48BA-84BC-3303B39AD3E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "module_8_task_1", "module_8_task_1\module_8_task_1.csproj", "{E7E944BF-179D-42FF-9236-8B7D3343ACAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7066239C-DE9A-48BA-84BC-3303B39AD3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7066239C-DE9A-48BA-84BC-3303B39AD3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7066239C-DE9A-48BA-84BC-3303B39AD3E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7E944BF-179D-42FF-9236-8B7D3343ACAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7E944BF-179D-42FF-9236-8B7D3343ACAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7E944BF-179D-42FF-9236-8B7D3343ACAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7E944BF-179D-42FF-9236-8B7D3343ACAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
