@@ -26,10 +26,10 @@ namespace module_8_task_2
                     size += fiInfo.Length;
                     filesCount++;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                }  
+                }
             }
             return size;
         }

@@ -12,8 +12,8 @@ namespace module_8_task_2
             if (isPathOkFilesExist)
             {
                 var workFolder = new DirectoryInfo(path);    
-                long workFolderSize = FilesSizeCounter.SizeCounter(workFolder);
-                Console.WriteLine($"Общий размер папки в байтах: {workFolderSize}");
+                long workFolderSize = FilesSizeCounter.SizeCounter(workFolder, out int filesCount);
+                Console.WriteLine($"Общий размер папки в байтах: {workFolderSize}, всего файлов: {filesCount} ");
             }
         }
     }
