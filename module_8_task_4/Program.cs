@@ -72,12 +72,12 @@ namespace FinalTask
 
             //получаем список студентов из "нашего" файла и формируем список групп
             var studentsFromFile = ReadFromFile(binaryFormatter);
-            var listGroups = new List<string>();
+            var groupsList = new List<string>();
             foreach (var student in studentsFromFile)
             {
-                if (!listGroups.Contains(student.Group))
+                if (!groupsList.Contains(student.Group))
                 {
-                    listGroups.Add(student.Group);
+                    groupsList.Add(student.Group);
                 }
             }
 
@@ -97,7 +97,7 @@ namespace FinalTask
             }
 
             
-            foreach (var group in listGroups)
+            foreach (var group in groupsList)
             {   //создаём файлы групп
                 var newPath = $"{pathToStudentsFolder}\\{group}.txt";
 
