@@ -61,8 +61,9 @@ namespace module_8_task_3
             }
         }
     
-        public static void ArchivesPreparer(DirectoryInfo directory, string nameIsThisDamnMacosx = "__MACOSX", string extension = ".zip")
+        public static bool ArchivesPreparer(DirectoryInfo directory, string nameIsThisDamnMacosx = "__MACOSX", string extension = ".zip")
         {
+            bool isOk = true;
             string subfolderForOriginalArchivesName = "Оригинальный архив";
             if (!Directory.Exists($"{directory.FullName}\\{subfolderForOriginalArchivesName}"))
             {
@@ -73,12 +74,26 @@ namespace module_8_task_3
             {
                 if(FileExtensionChecker(file, extension))
                 {
-                    ZipFile.ExtractToDirectory(file.FullName, directory.FullName);
-                    string newMainZipFileName = $"{directory.FullName}\\{subfolderForOriginalArchivesName}\\{file.Name}";
-                    file.MoveTo(newMainZipFileName);
+                    try
+                    {
+                        ZipFile.ExtractToDirectory(file.FullName, directory.FullName);
+                        string newMainZipFileName = $"{directory.FullName}\\{subfolderForOriginalArchivesName}\\{file.Name}";
+                        file.MoveTo(newMainZipFileName);
+                    }
+                    catch(Exception ex)
+                    {
+                        Misc.DisplayErrorMessages(message: $"Файл {file.Name} вызвал ошибку и не разархивировался нормально! Тип ошибки: \n ");
+                        Console.WriteLine(ex.GetType());
+                        isOk = false;
+                    }
                 }
             }
-            FoldersSuperviser.FolderByNameRemover(directory);
+            if(isOk)
+            {
+                FoldersSuperviser.FolderByNameRemover(directory);
+            }
+            return isOk;
+            
         }
 
         public static void ArchivesExtracter(DirectoryInfo directory, string extension = ".zip")
@@ -97,7 +112,15 @@ namespace module_8_task_3
                 {
                     string pathToArchive = file.FullName;
                     var tempString = file.Name.Remove(file.Name.Length - 4, 4);
-                    ZipFile.ExtractToDirectory(pathToArchive, $"{directory.FullName}\\{tempString}");
+                    try
+                    {
+                        ZipFile.ExtractToDirectory(pathToArchive, $"{directory.FullName}\\{tempString}");
+                    }
+                    catch(Exception ex)
+                    {
+                        Misc.DisplayErrorMessages(message: $"Файл {file.Name} вызвал ошибку и не разархивировался нормально! Тип ошибки: \n ");
+                        Console.WriteLine(ex.GetType());
+                    }    
                 } 
             }
         }

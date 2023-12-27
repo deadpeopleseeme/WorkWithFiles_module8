@@ -6,11 +6,14 @@ using System.Security.Cryptography;
 namespace module_8_task_3
 {
     internal class Program
-    {   public static void MainMethod(string path)
+    {   public static void MainMethod()
         {
+            Console.WriteLine("Программа предназначена для распаковки архивов в ЦС, устранения излишней вложенности и тд\n");
+            Console.WriteLine("Введите путь до папки потока: ");
+            string gigaMainFolderPath = Console.ReadLine();
             while (true)
-            {
-                string gigaMainFolderPath = path;
+            {   
+                
                 string mainFolderPath = $"{gigaMainFolderPath}\\ПРОВЕРЯЕМ";
                 string readyFolderPath = $"{gigaMainFolderPath}\\проверено";
                 if (!Directory.Exists(readyFolderPath))
@@ -28,12 +31,18 @@ namespace module_8_task_3
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("\n!!! Путь к папке потока остался пустой, программа не сработает. Возможно, не было нужного архива в папке 'ПРОВЕРЯЕМ' !!!");
+                    Misc.DisplayErrorMessages(message: "!!! Путь к папке потока остался пустой, программа не сработает. Возможно, не было нужного архива в папке 'ПРОВЕРЯЕМ' !!!");
+                    break;
                 }
                 if (currentFlowWorkFolderPath != "")
                 {
                     var currrentFlowWorkFolder = new DirectoryInfo(currentFlowWorkFolderPath);
-                    FilesSuperviser.ArchivesPreparer(currrentFlowWorkFolder);
+                    bool canMoveFurther = FilesSuperviser.ArchivesPreparer(currrentFlowWorkFolder);
+                    if(!canMoveFurther)
+                    {
+                        Misc.DisplayErrorMessages(message: "Архив факапнут, нужно разархивировать вручную :(");
+                        break;
+                    }
 
                     Console.WriteLine("Извлекаем содержимое архива, переносим его в отдельную папку: ");
                     FilesSuperviser.ArchivesExtracter(currrentFlowWorkFolder);
@@ -61,16 +70,20 @@ namespace module_8_task_3
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        Misc.DisplayErrorMessages(message: $"{ex.Message}\nНУЖНО ПЕРЕНЕСТИ АРХИВ В ПРОВЕРЕННЫЕ ВРУЧНУЮ!!!\n");
+                        
                     }
-                    Console.WriteLine("*** Теперь ОБЯЗАТЕЛЬНО положите архив и xlsx файл в папку и нажмите любую клавишу для подготовки нового потока ***");
+                    Console.WriteLine("*** Если архив уже перенесен в проверенные, ОБЯЗАТЕЛЬНО положите новые архив и xlsx файл в папку и нажмите любую клавишу для подготовки нового потока ***");
                     Console.ReadKey();
                 }
             }
         }
 
-        public static void CleaningAfterFlowFinished(string folderToCleanPath)
+        public static void CleaningAfterFlowFinished()
         {
+            Console.WriteLine("Программа предназначена для очистки папок после проверки всего потока\n");
+            Console.WriteLine("Введите путь до папки, КОТОРУЮ НУЖНО ОЧИСТИТЬ: ");
+            string folderToCleanPath = Console.ReadLine();
             var folderToClean = new DirectoryInfo(folderToCleanPath);
             foreach(var flowDirectory in folderToClean.GetDirectories()) 
             {
@@ -91,21 +104,26 @@ namespace module_8_task_3
             }
         }
 
-        public static void CreatingShitToUpload(string path)
+        public static void CreatingShitToUpload()
         {
+            Console.WriteLine("Программа создаёт папки в потоке, нужные для сбора KIM и Final отчётов\n");
+            Console.WriteLine("Введите путь до папки потока: ");
+            string path = Console.ReadLine();
             FoldersSuperviser.FoldersCreator(path);
             FilesSuperviser.BeginnigQueryCreator(path);
+            Console.ReadKey();
         }
         static void Main(string[] args)
         {
             //основной метод, разархивирует-удаляет мусорные папки-перемещает в проверено-тд
-            //MainMethod(@"E:\wrk\SDA\");
+            //MainMethod();
 
             //зачищаем папки от проверенных архивов, где всё ок, после полной проверки курса
-            CleaningAfterFlowFinished(@"E:\wrk\SDA\проверено\всёок");
+            //CleaningAfterFlowFinished();
+            //Console.ReadKey();
 
             //метод для изначальной подготовки папок к скачиванию отчётов по KIM-Start-etc
-            //CreatingShitToUpload(@"E:\wrk\ГРУЗИМ ГОВНО ЦС\SDA");
+            CreatingShitToUpload(); 
         }
     }
 }
